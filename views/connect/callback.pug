@@ -1,0 +1,115 @@
+extends ../layout
+
+block title
+  title Sellbot Connect With Poynt
+
+block body
+  .jumbotron
+    .container
+      h1 Connect With Poynt
+      p A simple demo of the roundtrip flow from a cloud app thru Poynt Processing signup and back.
+  .container
+    .row
+      .col-md-12
+        h3 Welcome back!
+        p Here's what we were able to grab from the new merchant signup. When you implement this functionality, you can save any of the below info (and more) on your server.
+        .card
+          .card-body
+            h5.card-title User info
+            h6.card-subtitle.text-muted.mb-3 You sent this ID over in the 
+              code context
+              |  param. Use it to tie the other info on this page to the user account on your side.
+            if context
+              dl.row
+                dt.col-md-3.text-right User ID
+                dt.col-md-9
+                  code #{context}
+              if business
+                dl.row
+                  dt.col-md-3.text-right Owner name
+                  dt.col-md-9 #{business.attributes.merchantContactFirstName} #{business.attributes.merchantContactLastName}
+
+            else
+              .alert.alert-danger Invalid context specified.
+        .card
+          .card-body
+            h5.card-title Token info
+            h6.card-subtitle.text-muted.mb-3 Decoded JWT from the 
+              code code
+              |  param.
+            if token
+              dl.row
+                dt.col-md-3.text-right Application ID
+                dt.col-md-9
+                  code #{token.sub}
+              dl.row
+                dt.col-md-3.text-right Business ID
+                dt.col-md-9
+                  code #{token['poynt.biz']}
+              dl.row
+                dt.col-md-3.text-right Distributor ID
+                dt.col-md-9
+                  code #{token['poynt.org']}
+              dl.row
+                dt.col-md-3.text-right Signup Profile ID
+                dt.col-md-9
+                  if token['poynt.pid']
+                    code #{token['poynt.pid']}
+                  else
+                    em Default signup profile used
+            else
+              .alert.alert-danger Invalid token specified.
+        .card
+          .card-body
+            h5.card-title Business info
+            h6.card-subtitle.text-muted.mb-3 We grabbed this using the Poynt SDK. Permissions to access this info were automatically granted to your app on signup.
+            if business
+              dl.row
+                dt.col-md-3.text-right Business Name
+                dt.col-md-9 #{business.doingBusinessAs}
+              dl.row
+                dt.col-md-3.text-right Email
+                dt.col-md-9 #{business.emailAddress}
+              dl.row
+                dt.col-md-3.text-right Address
+                dt.col-md-9 #{business.address.line1} #{business.address.line2}, #{business.address.city}, #{business.address.territory} #{business.address.postalCode}
+              dl.row
+                dt.col-md-3.text-right Phone
+                dt.col-md-9 (#{business.phone.areaCode}) #{business.phone.localPhoneNumber}
+              dl.row
+                dt.col-md-3.text-right MCC
+                dt.col-md-9 #{business.mcc}
+            else
+              .alert.alert-danger Could not load business info.
+        .card
+          .card-body
+            h5.card-title Poynt Collect
+            h6.card-subtitle.text-muted.mb-3 Since this cloud app has the Poynt Collect permission, you can use this API key to unlock Collect transactions for the merchant immediately.
+            if business && business.attributes.pcApiKey
+              dl.row
+                dt.col-md-3.text-right Poynt Collect API Key
+                dt.col-md-9
+                  code #{business.attributes.pcApiKey}
+            else
+              .alert.alert-danger Could not load Poynt Collect info.
+        .card
+          .card-body
+            h5.card-title Processing Application info
+            h6.card-subtitle.text-muted.mb-3 We grabbed this using the Poynt SDK. Permissions to access this info were automatically granted to your app on signup.
+            if business
+              dl.row
+                dt.col-md-3.text-right Payments Enabled
+                dt.col-md-9
+                  if business.attributes.enablePayment === '1'
+                    span.badge.badge-success Enabled
+                  else
+                    span.badge.badge-danger Disabled
+              dl.row
+                dt.col-md-3.text-right Refunds Enabled
+                dt.col-md-9
+                  if business.attributes.enableRefund === '1'
+                    span.badge.badge-success Enabled
+                  else
+                    span.badge.badge-danger Disabled
+            else
+              .alert.alert-danger Could not load application info.

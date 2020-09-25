@@ -1,0 +1,20 @@
+dl {
+  font-size: 90%;
+  margin-bottom: 0.5rem;
+}
+
+dl > dt:nth-child(1) {
+  font-weight: 600;
+}
+
+dl > dt:nth-child(2) {
+  font-weight: normal;
+}
+
+.alert {
+  font-size: 90%;
+}
+
+.card {
+  margin-bottom: 1rem;
+}

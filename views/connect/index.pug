@@ -1,0 +1,57 @@
+extends ../layout
+
+block title
+  title Sellbot Connect With Poynt
+
+block body
+  .jumbotron
+    .container
+      h1 Connect With Poynt
+      p A simple demo of the roundtrip flow from a cloud app thru Poynt Processing signup and back.
+  .container
+    .row
+      .col-md-8
+        form
+          .form-group.row
+            label.col-md-3.col-form-label.text-right User ID
+            .col-md-9
+              input.form-control(type='text', id='connect-id', value=uuid, disabled=true)
+              small.form-text Usually you'd have the user sign on your site first – we're skipping that step and assuming the user has already signed up with this user ID.
+          .form-group.row
+            label.col-md-3.col-form-label.text-right Name
+            .col-md-9
+              input.form-control(type='text', id='connect-name')
+          .form-group.row
+            label.col-md-3.col-form-label.text-right Email
+            .col-md-9
+              input.form-control(type='email', id='connect-email')
+          .form-group.row
+            label.col-md-3.col-form-label.text-right Phone
+            .col-md-9
+              input.form-control(type='phone', id='connect-phone')
+          .form-group.row
+            .col-md-3
+            .col-md-9
+              button.btn.btn-primary(type='submit') Sign Up
+
+block scripts
+  script.
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      var id = document.getElementById('connect-id').value;
+      var name = document.getElementById('connect-name').value;
+      var email = document.getElementById('connect-email').value;
+      var phone = document.getElementById('connect-phone').value;
+
+      var url = 'https://signup-st.poynt.com/r/sellbot/?;
+      url += [
+        'context=' + id,
+        name ? 'name=' + encodeURIComponent(name) : null,
+        email ? 'email=' + encodeURIComponent(email) : null,
+        phone ? 'phone=' + encodeURIComponent(phone) : null,
+      ].filter(function (key) { return key; }).join('&');
+
+      window.location = url;
+    });
