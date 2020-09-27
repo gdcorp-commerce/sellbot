@@ -1,4 +1,4 @@
-# Sellbot
+<img src="https://sellbot.co/images/sellbot-1000.png" alt="Sellbot" width="300" />
 
 ### A sample cloud application using various Poynt APIs. Visit it at https://sellbot.co!
 
