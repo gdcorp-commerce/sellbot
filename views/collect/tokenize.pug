@@ -190,22 +190,22 @@ block scripts
           return response.json();
         })
         .then(function (data) {
-          console.log('response', data);
-          if (data) {
-            if (data.status === 'DECLINED') {
-              document.getElementById('collect-transaction-failure').style.display = 'flex';
-              document.getElementById('collect-transaction-failure-text').innerHTML = [
-                'Transaction was declined',
-                data.processorResponse && data.processorResponse.statusMessage
-              ].filter(function (v) { return v; }).join(': ');
-            } else {
-              document.getElementById('collect-transaction-form').style.display = 'none';
-              document.getElementById('collect-transaction-success').style.display = 'block';
-              document.getElementById('collect-transaction-id').innerHTML = data.id;
-              document.getElementById('collect-transaction-amount').innerHTML = '$' + (data.amounts.transactionAmount / 100).toFixed(2);
-              document.getElementById('collect-transaction-action').innerHTML = data.action;
-              document.getElementById('collect-transaction-status').innerHTML = data.status;
-            }
+          if (!data || data.name === 'RequestError') {
+            document.getElementById('collect-transaction-failure').style.display = 'flex';
+            document.getElementById('collect-transaction-failure-text').innerHTML = data ? (data.developerMessage || data.name) : 'Request failed. Please try again.';
+          } else if (data.status === 'DECLINED') {
+            document.getElementById('collect-transaction-failure').style.display = 'flex';
+            document.getElementById('collect-transaction-failure-text').innerHTML = [
+              'Transaction was declined',
+              data.processorResponse && data.processorResponse.statusMessage
+            ].filter(function (v) { return v; }).join(': ');
+          } else {
+            document.getElementById('collect-transaction-form').style.display = 'none';
+            document.getElementById('collect-transaction-success').style.display = 'block';
+            document.getElementById('collect-transaction-id').innerHTML = data.id;
+            document.getElementById('collect-transaction-amount').innerHTML = '$' + (data.amounts.transactionAmount / 100).toFixed(2);
+            document.getElementById('collect-transaction-action').innerHTML = data.action;
+            document.getElementById('collect-transaction-status').innerHTML = data.status;
           }
         });
     };
