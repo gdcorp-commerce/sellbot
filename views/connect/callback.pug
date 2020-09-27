@@ -92,6 +92,10 @@ block body
                 dt.col-md-3.text-right Poynt Collect API Key
                 dt.col-md-9
                   code #{business.attributes.pcApiKey}
+              dl.row
+                dt.col-md-3.text-right Go to Poynt Collect
+                dt.col-md-9
+                  a(href='/collect?businessId=' + business.id + '&apiKey=' + business.attributes.pcApiKey, target='_blank') You can create a transaction on this business here.
             else
               .alert.alert-danger Could not load Poynt Collect info.
         .card
