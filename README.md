@@ -14,17 +14,6 @@ Since there are multiple scenarios demoed on this site, we've included a list of
 
 ---
 
-## Setup
-
-To run this app with your own application ID:
-
-1. Create a reseller organization on Staging (https://st.poynt.net/auth/signup/reseller) and email c@poynt.com to ask to configure it properly.
-2. Create a cloud app on your developer portal.
-3. Save the keypair PEM file as `keypair.pem` in the root of this repo.
-4. Update `lib/configs.json` with the corresponding IDs for your organization, application, and a sample business on your organization.
-
----
-
 ## Connect with Poynt
 
 We want it to be extremely easy for our partners to send their customers/merchants to Poynt to sign up for processing in our whitelabeled signup flow, then receive the merchant back after their application is complete with full access to merchant info and application status via API.
@@ -60,3 +49,14 @@ views
   collect
     tokenize.pug – an HTML page that serves the Collect form so you can try tokenizing/charging a card
 ```
+
+---
+
+## Setup
+
+To run this app with your own application ID:
+
+1. Create a reseller organization on Staging (https://st.poynt.net/auth/signup/reseller) and email c@poynt.com to ask to configure it properly.
+2. Create a cloud app on your developer portal.
+3. Save the keypair PEM file as `keypair.pem` in the root of this repo.
+4. Update `lib/configs.json` with the corresponding IDs for your organization, application, and a sample business on your organization.
