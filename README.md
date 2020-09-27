@@ -1,0 +1,55 @@
+# Sellbot
+
+### A sample cloud application using various Poynt APIs. Visit it at https://sellbot.co!
+
+We made this app for three purposes:
+
+1. To make it easy to test out various SDKs Poynt has to offer developers – even before writing any code on your own.
+
+2. To show more complex flows such as Connect with Poynt that require some setup beforehand.
+
+3. To share sample code to help our developers get up and running more easily.
+
+Since there are multiple scenarios demoed on this site, we've included a list of relevant files for each of the demos below.
+
+---
+
+## Connect with Poynt
+
+We want it to be extremely easy for our partners to send their customers/merchants to Poynt to sign up for processing in our whitelabeled signup flow, then receive the merchant back after their application is complete with full access to merchant info and application status via API.
+
+**Try it out at https://sellbot.co/connect**
+
+File structure:
+
+```
+lib
+  poynt.js – wrapper around the Poynt SDK (https://github.com/poynt/poynt-node)
+routes
+  connect.js – serves both routes: /connect and /connect/callback
+views
+  connect
+    callback.pug – handle the callback after the merchant is redirected back after the application
+    index.pug - take in some info about the merchant and kick off the Poynt processing signup flow
+```
+
+---
+
+## Poynt Collect
+
+As a merchant, easily accept payments from your customers online. As a developer, embed a Poynt-hosted credit card form on your own app, so you can tokenize cards and process payments on behalf of the merchant without worrying about PCI certification yourself.
+
+**Try it out at https://sellbot.co/collect**
+
+File structure:
+
+```
+public
+  css
+    collect.css – some styles to hide various elements of the page until they're needed
+routes
+  collect.js – serves the page where the Collect form is hosted
+views
+  collect
+    tokenize.pug – an HTML page that serves the Collect form so you can try tokenizing/charging a card
+```
