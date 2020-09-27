@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-router.get("/", (_req, res) => {
+router.get("/", (req, res) => {
   res.render("collect/tokenize", {
     apiKey: req.query.apiKey || global.configs.collectApiKey,
     applicationId: global.configs.applicationId,
