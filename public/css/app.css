@@ -85,6 +85,7 @@ dl > dt:nth-child(2) {
   font-weight: 600;
   padding-top: 19px;
   padding-bottom: 19px;
+  margin-left: 10px;
   transition: color 0.2s border-bottom-color 0.2s;
   border-bottom: 4px solid transparent;
   border-top: 4px solid transparent;
