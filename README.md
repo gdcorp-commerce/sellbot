@@ -18,9 +18,7 @@ Since there are multiple scenarios demoed on this site, we've included a list of
 
 We want it to be extremely easy for our partners to send their customers/merchants to Poynt to sign up for processing in our whitelabeled signup flow, then receive the merchant back after their application is complete with full access to merchant info and application status via API.
 
-**Try it out at https://sellbot.co/connect**
-
-File structure:
+**Try it out at [https://sellbot.co/connect](https://sellbot.co/connect).**
 
 ```
 lib
@@ -39,9 +37,7 @@ views
 
 As a merchant, easily accept payments from your customers online. As a developer, embed a Poynt-hosted credit card form on your own app, so you can tokenize cards and process payments on behalf of the merchant without worrying about PCI certification yourself.
 
-**Try it out at https://sellbot.co/collect**
-
-File structure:
+**Try it out at [https://sellbot.co/collect](https://sellbot.co/collect).**
 
 ```
 public
