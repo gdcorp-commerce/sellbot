@@ -92,9 +92,9 @@ block body
                 dt.col-md-9
                   code #{business.attributes.pcApiKey}
               dl.row
-                dt.col-md-3.text-right Go to Poynt Collect
+                dt.col-md-3.text-right.col-form-label Go to Poynt Collect
                 dt.col-md-9
-                  a(href='/collect?businessId=' + business.id + '&apiKey=' + business.attributes.pcApiKey, target='_blank') Click here to try out Poynt Collect with this new merchant.
+                  a.btn.btn-primary(href='/collect?businessId=' + business.id + '&apiKey=' + business.attributes.pcApiKey, target='_blank') Try Poynt Collect with this merchant
             else
               .alert.alert-danger Could not load Poynt Collect info.
         .card
