@@ -1,3 +1,10 @@
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+  }
+}
+
 dl {
   font-size: 90%;
   margin-bottom: 0.5rem;

@@ -1,0 +1,16 @@
+#collect-token {
+  display: none;
+}
+
+#collect-token-failed {
+  display: none;
+}
+
+#collect-transaction-success,
+#collect-transaction-failure {
+  display: none;
+}
+
+#collect-transaction-failure {
+  color: red;
+}
