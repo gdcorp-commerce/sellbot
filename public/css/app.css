@@ -1,3 +1,51 @@
+/*** fonts ***/
+@font-face {
+  font-family: "objektiv-mk2";
+  src: url("https://use.typekit.net/af/470b69/00000000000000003b9add12/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/470b69/00000000000000003b9add12/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/470b69/00000000000000003b9add12/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "objektiv-mk2";
+  src: url("https://use.typekit.net/af/e42109/00000000000000003b9add13/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/e42109/00000000000000003b9add13/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/e42109/00000000000000003b9add13/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "objektiv-mk2";
+  src: url("https://use.typekit.net/af/610f40/00000000000000003b9add16/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
+      format("woff2"),
+    url("https://use.typekit.net/af/610f40/00000000000000003b9add16/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
+      format("woff"),
+    url("https://use.typekit.net/af/610f40/00000000000000003b9add16/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
+      format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 700;
+}
+
+body,
+select,
+input,
+button {
+  font-family: "objectiv-mk2", "Avenir Next W02", "Avenir Next", "Proxima Nova",
+    "Myriad Pro", Helvetica, Calibri, sans-serif !important;
+}
+
 @media (min-width: 992px) {
   .navbar-expand-lg .navbar-nav .nav-link {
     padding-right: 1.2rem;
@@ -18,10 +66,65 @@ dl > dt:nth-child(2) {
   font-weight: normal;
 }
 
+.navbar {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.navbar-dark {
+  background: #3f54bc;
+}
+
+.navbar-brand {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 30px;
+}
+
+.nav-link {
+  font-weight: 600;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  transition: color 0.2s border-bottom-color 0.2s;
+  border-bottom: 4px solid transparent;
+  border-top: 4px solid transparent;
+}
+
+.nav-item.active .nav-link {
+  border-bottom-color: white;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
 .alert {
   font-size: 90%;
 }
 
 .card {
   margin-bottom: 1rem;
+}
+
+.btn-outline-primary {
+  color: #3f54bc;
+  border-color: #3f54bc;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #3f54bc;
+  border-color: #3f54bc;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #3f54bc;
+  border-color: #3f54bc;
+}
+
+.btn-primary:hover {
+  background-color: #4d67e6;
+  border-color: #4d67e6;
 }
