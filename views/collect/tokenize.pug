@@ -130,14 +130,14 @@ block scripts
       });
 
       //- create token on submit
-      var button = document.querySelector("button");
-      button.addEventListener("click", function (event) {
+      var button = document.querySelector('button');
+      button.addEventListener('click', function (event) {
         event.preventDefault();
         collect.createToken({});
       });
 
       //- handle token event
-      collect.on("token", function (event) {
+      collect.on('token', function (event) {
         console.log('Token created!');
         if (event && event.data && event.data.paymentToken) {
           var data = event.data;
