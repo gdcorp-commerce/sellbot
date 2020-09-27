@@ -41,7 +41,8 @@
 body,
 select,
 input,
-button {
+button,
+textarea {
   font-family: "objectiv-mk2", "Avenir Next W02", "Avenir Next", "Proxima Nova",
     "Myriad Pro", Helvetica, Calibri, sans-serif !important;
 }
