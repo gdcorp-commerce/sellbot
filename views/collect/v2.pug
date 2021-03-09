@@ -1,0 +1,270 @@
+extends ../layout
+
+block title
+  title Sellbot – Poynt Collect – Tokenize
+
+block styles
+  link(rel='stylesheet', href='/css/collect.css')
+
+block body
+  .jumbotron
+    .container
+      h1 Poynt Collect v2
+      p A simple demo of loading Poynt Collect v2, accepting credit card info, generating a long-term payment token for a single business, then charging the token.
+      p: a.btn.btn-outline-primary(href='https://docs.poynt.com/app-integration/poynt-collect/', target='_blank') Read the docs here!
+  .container
+    .row
+      .col-md-8.col-md-offset-2#collect-form
+        form
+          .form-group.row
+            .col-md-12
+              #card-element
+          .form-group.row
+            .col-md-12.text-center
+              button.btn.btn-primary#collect-nonce-button Get nonce
+      .col-md-12#collect-nonce
+        .card
+          .card-body
+            h5.card-title Nonce info
+            h6.card-subtitle.text-muted.mb-3 Here's the nonce you got back from Poynt Collect. You can send this nonce to your backend and try tokenizing or charging it if you want.
+            .alert.alert-danger#collect-nonce-failed Nonce failed. 
+              a(href='/collect') Click here to try again.
+            .row#collect-nonce-success
+              .col-md-12
+                hr
+                dl.row
+                  dt.col-md-3.text-right Nonce
+                  dt.col-md-9
+                    code#collect-nonce-nonce
+              .col-md-12
+                hr
+                .row#collect-nonce-tokenize-form
+                  .col-md-12
+                    dl.row
+                      dt.col-md-3
+                      dt.col-md-4
+                        button.btn.btn-primary#collect-tokenize Get token
+                    dl.row#collect-nonce-tokenize-failure
+                      dt.col-md-3
+                      dt.col-md-9#collect-nonce-tokenize-failure-text
+
+      .col-md-12#collect-token
+        .card
+          .card-body
+            h5.card-title Token info
+            h6.card-subtitle.text-muted.mb-3 Here's the token you got back from Poynt Collect. Note that you typically wouldn't send this back to your frontend; we just did it here so you can see the token info. You can try charging this token if you want.
+            .alert.alert-danger#collect-token-failed Tokenization failed. 
+              a(href='/collect') Click here to try again.
+            .row#collect-token-success
+              .col-md-12
+                hr
+                .row#collect-transaction-form
+                  .col-md-12
+                    dl.row
+                      dt.col-md-3.col-form-label.text-right Receipt email?
+                      dt.col-md-4
+                        input.form-control#collect-email(type='email', placeholder='Optional')
+                    dl.row
+                      dt.col-md-3.col-form-label.text-right Amount
+                      dt.col-md-4
+                        input.form-control#collect-amount(type='number', placeholder='5.00')
+                    dl.row
+                      dt.col-md-3
+                      dt.col-md-4
+                        button.btn.btn-primary#collect-charge Charge this token
+                    dl.row#collect-transaction-failure
+                      dt.col-md-3
+                      dt.col-md-9#collect-transaction-failure-text
+                .row#collect-transaction-success
+                  .col-md-12
+                    dl.row
+                      dt.col-md-3.text-right Transaction ID
+                      dt.col-md-9
+                        code#collect-transaction-id
+                    dl.row
+                      dt.col-md-3.text-right Amount
+                      dt.col-md-9#collect-transaction-amount
+                    dl.row
+                      dt.col-md-3.text-right Action
+                      dt.col-md-9
+                        code#collect-transaction-action
+                    dl.row
+                      dt.col-md-3.text-right Status
+                      dt.col-md-9
+                        code#collect-transaction-status
+                hr
+                dl.row
+                  dt.col-md-3.text-right Card ID
+                  dt.col-md-9
+                    code#collect-token-card-id
+                dl.row
+                  dt.col-md-3.text-right Card type
+                  dt.col-md-9
+                    span#collect-token-card-type
+                dl.row
+                  dt.col-md-3.text-right Card number
+                  dt.col-md-9
+                    span#collect-token-card-number
+                dl.row
+                  dt.col-md-3.text-right Card expiration
+                  dt.col-md-9
+                    span#collect-token-card-expiration
+                dl.row
+                  dt.col-md-3.text-right Customer ID
+                  dt.col-md-9
+                    code#collect-token-customer-id
+                dl.row
+                  dt.col-md-3.text-right Payment Token
+                  dt.col-md-9
+                    code#collect-token-payment-token
+                dl.row
+                  dt.col-md-3.text-right Token ID
+                  dt.col-md-9
+                    code#collect-token-token-id
+
+block scripts
+  script.
+    var token; // we will save the collect token here
+    var customerUserId;
+
+    //- tokenize
+    var poyntCollect = document.createElement('script');
+    var options = {
+      amount: 1500,
+      iFrame: {
+        border: '0px',
+        height: '320px',
+        width: '100%',
+      },
+      style: {
+        theme: '#{theme}'
+      },
+      displayComponents: {
+        firstName: true,
+        lastName: true, 
+        emailAddress: true,
+        zipCode: true,
+        labels: true,
+      }, 
+    };
+    poyntCollect.src = 'https://st.poynt.net/snippet/poynt-collect/bundle-st.js';
+    poyntCollect.async = true;
+    poyntCollect.onload = function () {
+      //- load poynt collect
+      var collect = new TokenizeJs('#{businessId}', '#{applicationId}');
+      collect.mount('card-element', document, options);
+      collect.on('ready', function (event) {
+        console.log('Poynt Collect is ready!');
+      });
+
+      //- create nonce on submit
+      document.getElementById('collect-nonce-button').addEventListener('click', function (event) {
+        event.preventDefault();
+        collect.getNonce({});
+      });
+
+      //- handle nonce event
+      collect.on('nonce', function (event) {
+        console.log('Nonce created!');
+        console.log(event);
+        if (event && event.data && event.data.nonce) {
+          document.getElementById('collect-nonce-nonce').innerHTML = event.data.nonce;
+          document.getElementById('collect-form').style.display = 'none';
+          document.getElementById('collect-nonce').style.display = 'block';
+          document.getElementById('collect-nonce-success').style.display = 'block';
+          document.getElementById('collect-nonce-failed').style.display = 'none';
+        } else {
+          document.getElementById('collect-form').style.display = 'none';
+          document.getElementById('collect-nonce').style.display = 'block';
+          document.getElementById('collect-nonce-success').style.display = 'none';
+          document.getElementById('collect-nonce-failed').style.display = 'block';
+        }
+      })
+    };
+    document.body && document.body.appendChild(poyntCollect);
+
+    //- tokenize
+    document.getElementById('collect-tokenize').onclick = function () {
+      var data = {
+        businessId: '#{businessId}',
+        nonce: document.getElementById('collect-nonce-nonce').innerHTML
+      };
+      fetch('/collect/tokenize', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log('Token created!', data);
+          if (data && data.paymentToken) {
+            token = data.paymentToken;
+            customerUserId = data.customerUserId;
+            document.getElementById('collect-token-card-id').innerHTML = data.card.cardId;
+            document.getElementById('collect-token-card-type').innerHTML = data.card.type;
+            document.getElementById('collect-token-card-number').innerHTML = data.card.numberMasked;
+            document.getElementById('collect-token-card-expiration').innerHTML = data.card.expirationMonth + '/' + data.card.expirationYear;
+            document.getElementById('collect-token-customer-id').innerHTML = data.customerUserId
+            document.getElementById('collect-token-payment-token').innerHTML = data.paymentToken;
+            document.getElementById('collect-token-token-id').innerHTML = data.token;
+            document.getElementById('collect-nonce').style.display = 'none';
+            document.getElementById('collect-token').style.display = 'block';
+            document.getElementById('collect-token-success').style.display = 'block';
+            document.getElementById('collect-token-failed').style.display = 'none';
+          } else {
+            document.getElementById('collect-nonce').style.display = 'none';
+            document.getElementById('collect-token').style.display = 'block';
+            document.getElementById('collect-token-success').style.display = 'none';
+            document.getElementById('collect-token-failed').style.display = 'block';
+          }
+        });
+    };
+
+    //- charge
+    document.getElementById('collect-charge').onclick = function () {
+      var amount = parseFloat(document.getElementById('collect-amount').value) || 5;
+      if (isNaN(amount)) {
+        return;
+      }
+      document.getElementById('collect-transaction-failure').style.display = 'none';
+      var data = {
+        amount: Math.round((amount || 5) * 100),
+        businessId: '#{businessId}',
+        customerUserId: customerUserId,
+        emailAddress: document.getElementById('collect-email').value,
+        token: token,
+      };
+      fetch('/collect/charge', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (!data || data.name === 'RequestError') {
+            document.getElementById('collect-transaction-failure').style.display = 'flex';
+            document.getElementById('collect-transaction-failure-text').innerHTML = data ? (data.developerMessage || data.name) : 'Request failed. Please try again.';
+          } else if (data.status === 'DECLINED') {
+            document.getElementById('collect-transaction-failure').style.display = 'flex';
+            document.getElementById('collect-transaction-failure-text').innerHTML = [
+              'Transaction was declined',
+              data.processorResponse && data.processorResponse.statusMessage
+            ].filter(function (v) { return v; }).join(': ');
+          } else {
+            document.getElementById('collect-transaction-form').style.display = 'none';
+            document.getElementById('collect-transaction-success').style.display = 'block';
+            document.getElementById('collect-transaction-id').innerHTML = data.id;
+            document.getElementById('collect-transaction-amount').innerHTML = '$' + (data.amounts.transactionAmount / 100).toFixed(2);
+            document.getElementById('collect-transaction-action').innerHTML = data.action;
+            document.getElementById('collect-transaction-status').innerHTML = data.status;
+          }
+        });
+    };

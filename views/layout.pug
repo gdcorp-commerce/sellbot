@@ -14,8 +14,11 @@ html
         li.nav-item(class=(page === 'connect' ? 'active' : ''))
           a.nav-link(href='/connect') Connect
       ul.navbar-nav
-        li.nav-item(class=(page === 'collect' ? 'active' : ''))
-          a.nav-link(href='/collect') Poynt Collect
+        li.nav-item(class=(page === 'collect-v2' ? 'active' : ''))
+          a.nav-link(href='/collect') Poynt Collect v2
+      ul.navbar-nav
+        li.nav-item(class=(page === 'collect-v1' ? 'active' : ''))
+          a.nav-link(href='/collect/v1') Poynt Collect v1
       ul.navbar-nav.ml-auto
         li.nav-item
           a.nav-link(href='https://github.com/poynt/sellbot', target='_blank') View Source on GitHub

@@ -1,16 +1,21 @@
-#collect-token {
+#collect-token,
+#collect-nonce {
   display: none;
 }
 
-#collect-token-failed {
+#collect-token-failed,
+#collect-nonce-failed {
   display: none;
 }
 
 #collect-transaction-success,
-#collect-transaction-failure {
+#collect-transaction-failure,
+#collect-nonce-tokenize-success,
+#collect-nonce-tokenize-failure {
   display: none;
 }
 
-#collect-transaction-failure {
+#collect-transaction-failure,
+#collect-nonce-tokenize-failure {
   color: red;
 }
