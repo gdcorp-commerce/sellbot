@@ -1,7 +1,7 @@
 extends ../layout
 
 block title
-  title Sellbot – Poynt Collect – Tokenize
+  title Sellbot – Poynt Collect v2
 
 block styles
   link(rel='stylesheet', href='/css/collect.css')
@@ -146,6 +146,7 @@ block scripts
         zipCode: true,
         labels: true,
       }, 
+      additionalFieldsToValidate: ['firstName', 'lastName', 'zip'],
     };
     poyntCollect.src = 'https://st.poynt.net/snippet/poynt-collect/bundle-st.js';
     poyntCollect.async = true;
