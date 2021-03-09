@@ -10,10 +10,10 @@ global.configs = require("./lib/configs");
 
 // redirect home to Connect demo
 app.get("/", (_req, res) => {
-  res.redirect("/connect");
+  res.redirect("/link");
 });
 
-app.use("/connect", require("./routes/connect"));
+app.use("/link", require("./routes/link"));
 app.use("/collect", require("./routes/collect"));
 
 const port = 1347;

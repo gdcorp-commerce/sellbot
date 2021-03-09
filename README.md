@@ -14,19 +14,19 @@ Since there are multiple scenarios demoed on this site, we've included a list of
 
 ---
 
-## Connect with Poynt
+## Link with Poynt
 
 We want it to be extremely easy for our partners to send their customers/merchants to Poynt to sign up for processing in our whitelabeled signup flow, then receive the merchant back after their application is complete with full access to merchant info and application status via API.
 
-**Try it out at [https://sellbot.co/connect](https://sellbot.co/connect).**
+**Try it out at [https://sellbot.co/link](https://sellbot.co/link).**
 
 ```
 lib
   poynt.js – wrapper around the Poynt SDK (https://github.com/poynt/poynt-node)
 routes
-  connect.js – serves both routes: /connect and /connect/callback
+  link.js – serves both routes: /link and /link/callback
 views
-  connect
+  link
     callback.pug – handle the callback after the merchant is redirected back after the application
     index.pug - take in some info about the merchant and kick off the Poynt processing signup flow
 ```
