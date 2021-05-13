@@ -42,6 +42,7 @@ router.post("/charge", async (req, res) => {
       currency: "USD",
       token: req.body.token,
       emailReceipt: !!req.body.emailAddress,
+      partialAuthEnabled: false,
       receiptEmailAddress: req.body.emailAddress,
     });
   } catch (err) {
