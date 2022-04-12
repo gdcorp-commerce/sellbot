@@ -118,7 +118,7 @@ block scripts
         lastName: true,
       }
     };
-    poyntCollect.src = 'https://st.poynt.net/snippet/poynt-collect/bundle-st.js';
+    poyntCollect.src = 'https://ote.poynt.net/snippet/poynt-collect/bundle-ote.js';
     poyntCollect.async = true;
     poyntCollect.onload = function () {
       //- load poynt collect
@@ -176,7 +176,7 @@ block scripts
         emailAddress: document.getElementById('collect-email').value,
         token: token,
       };
-      fetch('https://vt-st.poynt.net/poynt-collect/charge-token', {
+      fetch('https://vt-ote.poynt.net/poynt-collect/charge-token', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

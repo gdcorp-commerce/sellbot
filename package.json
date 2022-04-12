@@ -1,6 +1,6 @@
 {
   "name": "sellbot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sample app using various Poynt APIs",
   "main": "index.js",
   "author": "Charles Feng <c@poynt.com>",
