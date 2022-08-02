@@ -20,8 +20,11 @@ block body
             .col-md-12
               #card-element
           .form-group.row
-            .col-md-12.text-center
-              button.btn.btn-primary#collect-nonce-button Get nonce
+            .col-md-5.text-right
+              button.btn.btn-primary#collect-nonce-button Get nonce 
+            .col-md-7.text-left
+              div#collect-wallet-button
+              script(src='/wallet.js')
       .col-md-12#collect-nonce
         .card
           .card-body
