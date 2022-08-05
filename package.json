@@ -12,5 +12,13 @@
     "poynt": "^0.0.33",
     "pug": "^3.0.0",
     "uuid": "^8.3.0"
+  },
+  "bundledDependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "poynt": "^0.0.33",
+    "pug": "^3.0.0",
+    "uuid": "^8.3.0"
   }
 }
