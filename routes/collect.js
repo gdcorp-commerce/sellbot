@@ -32,7 +32,7 @@ router.post("/charge", async (req, res) => {
   var charge;
   try {
     const asyncChargeToken = util.promisify(poynt.chargeToken).bind(poynt);
-    charge = await asyncChargeToken({
+    var chargeRequest = {
       businessId: req.body.businessId,
       action: "SALE",
       amounts: {
@@ -44,7 +44,15 @@ router.post("/charge", async (req, res) => {
       emailReceipt: !!req.body.emailAddress,
       partialAuthEnabled: false,
       receiptEmailAddress: req.body.emailAddress,
-    });
+    };
+    if (req.body.token) {
+      chargeRequest.token = req.body.token;
+    } else if (req.body.nonce) {
+      chargeRequest.nonce = req.body.nonce;
+    } else {
+      res.send(400).send("Missing funding source: nonce or token");
+    }
+    charge = await asyncChargeToken(chargeRequest);
   } catch (err) {
     console.log("Charge failed", err);
     return res.status(400).send(err);

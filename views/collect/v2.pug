@@ -39,17 +39,47 @@ block body
                   dt.col-md-3.text-right Nonce
                   dt.col-md-9
                     code#collect-nonce-nonce
+                dl.row
+                  dt.col-md-3.text-right Receipt email?
+                  dt.col-md-4
+                    input.form-control#collect-email(type='email', placeholder='Optional')
+                dl.row
+                  dt.col-md-3.text-right Amount
+                  dt.col-md-4
+                    input.form-control#collect-amount(type='number', placeholder='5.00')
               .col-md-12
                 hr
                 .row#collect-nonce-tokenize-form
                   .col-md-12
                     dl.row
+                      dt.col-md-1
                       dt.col-md-3
-                      dt.col-md-4
                         button.btn.btn-primary#collect-tokenize Get token
+                      dt.col-md-3
+                        button.btn.btn-primary#collect-charge-nonce Charge nonce
                     dl.row#collect-nonce-tokenize-failure
                       dt.col-md-3
                       dt.col-md-9#collect-nonce-tokenize-failure-text
+                    dl.row#collect-nonce-charge-failure
+                      dt.col-md-3
+                      dt.col-md-9#collect-nonce-charge-failure-text
+                .row#nonce-transaction-success
+                  .col-md-12
+                    dl.row
+                      dt.col-md-3.text-right Transaction ID
+                      dt.col-md-9
+                        code#nonce-transaction-id
+                    dl.row
+                      dt.col-md-3.text-right Amount
+                      dt.col-md-9#nonce-transaction-amount
+                    dl.row
+                      dt.col-md-3.text-right Action
+                      dt.col-md-9
+                        code#nonce-transaction-action
+                    dl.row
+                      dt.col-md-3.text-right Status
+                      dt.col-md-9
+                        code#nonce-transaction-status
 
       .col-md-12#collect-token
         .card
@@ -57,7 +87,7 @@ block body
             h5.card-title Token info
             h6.card-subtitle.text-muted.mb-3 Here's the token you got back from Poynt Collect. Note that you typically wouldn't send this back to your frontend; we just did it here so you can see the token info. You can try charging this token if you want.
             .alert.alert-danger#collect-token-failed Tokenization failed. 
-              a(href='/collect') Click here to try again.
+            a(href='/collect') Click here to try again.
             .row#collect-token-success
               .col-md-12
                 hr
@@ -177,6 +207,7 @@ block scripts
           document.getElementById('collect-nonce').style.display = 'block';
           document.getElementById('collect-nonce-success').style.display = 'block';
           document.getElementById('collect-nonce-failed').style.display = 'none';
+          document.getElementById('nonce-transaction-success').style.display = 'none';
         } else {
           document.getElementById('collect-form').style.display = 'none';
           document.getElementById('collect-nonce').style.display = 'block';
@@ -220,6 +251,9 @@ block scripts
             document.getElementById('collect-token-success').style.display = 'block';
             document.getElementById('collect-token-failed').style.display = 'none';
           } else {
+            if (data.statusCode == 403) {
+              document.getElementById('collect-token-failed').innerHTML = data.developerMessage;
+            }
             document.getElementById('collect-nonce').style.display = 'none';
             document.getElementById('collect-token').style.display = 'block';
             document.getElementById('collect-token-success').style.display = 'none';
@@ -269,6 +303,51 @@ block scripts
             document.getElementById('collect-transaction-amount').innerHTML = '$' + (data.amounts.transactionAmount / 100).toFixed(2);
             document.getElementById('collect-transaction-action').innerHTML = data.action;
             document.getElementById('collect-transaction-status').innerHTML = data.status;
+          }
+        });
+    };
+
+    document.getElementById('collect-charge-nonce').onclick = function () {
+      var amount = parseFloat(document.getElementById('collect-amount').value) || 5;
+      if (isNaN(amount)) {
+        return;
+      }
+      document.getElementById('collect-nonce-tokenize-failure').style.display = 'none';
+      document.getElementById('collect-nonce-charge-failure').style.display = 'none';
+      var data = {
+        amount: Math.round((amount || 5) * 100),
+        businessId: '#{businessId}',
+        customerUserId: customerUserId,
+        emailAddress: document.getElementById('collect-email').value,
+        nonce: document.getElementById('collect-nonce-nonce').innerHTML,
+      };
+      fetch('/collect/charge', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (!data || data.name === 'RequestError') {
+            document.getElementById('collect-nonce-charge-failure').style.display = 'flex';
+            document.getElementById('collect-nonce-charge-failure-text').innerHTML = data ? (data.developerMessage || data.name) : 'Charge nonce failed. Please try again.';
+          } else if (data.status === 'DECLINED') {
+            document.getElementById('collect-nonce-charge-failure').style.display = 'flex';
+            document.getElementById('collect-nonce-charge-failure-text').innerHTML = [
+              'Transaction was declined',
+              data.processorResponse && data.processorResponse.statusMessage
+            ].filter(function (v) { return v; }).join(': ');
+          } else {
+            document.getElementById('collect-nonce-tokenize-form').style.display = 'none';
+            document.getElementById('nonce-transaction-success').style.display = 'block';
+            document.getElementById('nonce-transaction-id').innerHTML = data.id;
+            document.getElementById('nonce-transaction-amount').innerHTML = '$' + (data.amounts.transactionAmount / 100).toFixed(2);
+            document.getElementById('nonce-transaction-action').innerHTML = data.action;
+            document.getElementById('nonce-transaction-status').innerHTML = data.status;
           }
         });
     };

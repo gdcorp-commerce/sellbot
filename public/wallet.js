@@ -45,7 +45,7 @@ walletCollect.onload = function () {
     requireShippingAddress: true,
     supportCouponCode: true
   };
-  var collect = new TokenizeJs('17ce7699-3aa8-4484-bdc2-864eb0161f5c', 'urn:aid:postman-runner', walletRequest);
+  var collect = new TokenizeJs('84fa5bf5-bd51-4653-80de-ce46348f7659', 'urn:aid:de21a730-891c-4800-a27c-0c747cd6a187', walletRequest);
   
   // [Required] Payment authorization handling
   collect.on('payment_authorized', function (event) {
@@ -53,6 +53,7 @@ walletCollect.onload = function () {
       console.log('Nonce created for ' + event.source, event.nonce);
       document.getElementById('collect-nonce-nonce').innerHTML = event.nonce;
       document.getElementById('collect-form').style.display = 'none';
+      document.getElementById('nonce-transaction-success').style.display = 'none';
       document.getElementById('collect-nonce').style.display = 'block';
       document.getElementById('collect-nonce-success').style.display = 'block';
       document.getElementById('collect-nonce-failed').style.display = 'none';
