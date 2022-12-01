@@ -1,5 +1,5 @@
 var walletCollect = document.createElement('script');
-walletCollect.src = 'https://ote.poynt.net/snippet/poynt-collect/bundle-ote.js';
+walletCollect.src = 'https://cdn.poynt.net/ote/collect-ote.js';
 walletCollect.async = true;
 walletCollect.onload = function () {
   var order = {
