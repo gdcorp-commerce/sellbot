@@ -46,7 +46,7 @@ block body
                 dl.row
                   dt.col-md-3.text-right Amount
                   dt.col-md-4
-                    input.form-control#collect-amount(type='number', placeholder='5.00')
+                    input.form-control#collect-amount-nonce(type='number', placeholder='5.00')
               .col-md-12
                 hr
                 .row#collect-nonce-tokenize-form
@@ -100,7 +100,7 @@ block body
                     dl.row
                       dt.col-md-3.col-form-label.text-right Amount
                       dt.col-md-4
-                        input.form-control#collect-amount(type='number', placeholder='5.00')
+                        input.form-control#collect-amount-token(type='number', placeholder='5.00')
                     dl.row
                       dt.col-md-3
                       dt.col-md-4
@@ -264,7 +264,7 @@ block scripts
 
     //- charge
     document.getElementById('collect-charge').onclick = function () {
-      var amount = parseFloat(document.getElementById('collect-amount').value) || 5;
+      var amount = parseFloat(document.getElementById('collect-amount-token').value) || 5;
       if (isNaN(amount)) {
         return;
       }
@@ -308,7 +308,7 @@ block scripts
     };
 
     document.getElementById('collect-charge-nonce').onclick = function () {
-      var amount = parseFloat(document.getElementById('collect-amount').value) || 5;
+      var amount = parseFloat(document.getElementById('collect-amount-nonce').value) || 5;
       if (isNaN(amount)) {
         return;
       }
