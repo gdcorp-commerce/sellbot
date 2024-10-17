@@ -1,8 +1,8 @@
 {
   "env": "ote",
-  "applicationId": "urn:aid:de21a730-891c-4800-a27c-0c747cd6a187",
+  "applicationId": "urn:aid:96ab60b3-af84-4bfa-819b-59bc350f880a",
 
   "collectApiKey": "865324d8-fe9b-427b-9163-d46baf90f0c2",
-  "collectBusinessId": "84fa5bf5-bd51-4653-80de-ce46348f7659",
+  "collectBusinessId": "fa039358-6752-41fa-a6f3-3ea6b744ee0e",
   "collectTheme": "default"
 }
