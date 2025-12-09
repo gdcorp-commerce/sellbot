@@ -61,14 +61,4 @@ router.post("/charge", async (req, res) => {
   res.status(200).send(charge);
 });
 
-router.get("/v1", (req, res) => {
-  res.render("collect/v1", {
-    apiKey: req.query.apiKey || global.configs.collectApiKey,
-    applicationId: global.configs.applicationId,
-    businessId: req.query.businessId || global.configs.collectBusinessId,
-    theme: req.query.theme || global.configs.collectTheme,
-    page: "collect-v1",
-  });
-});
-
 module.exports = router;
